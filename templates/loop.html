@@ -1,0 +1,19 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Flask App</title>
+</head>
+<body>
+    <h1>Welcome to Flask!</h1>
+    <p>The list has {{ items|length }} items.</p>
+    <ul>
+        {% for item in items %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+      
+</body>
+</html>

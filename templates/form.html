@@ -1,0 +1,17 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Flask App</title>
+</head>
+<body>
+    <h1>Welcome to Flask!  Sign-up here:</h1>
+    <form method="POST">
+        <input type="text" placeholder="name" name="username">
+        <input type="password" placeholder="password" name="password">
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>
