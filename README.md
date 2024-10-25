@@ -24,7 +24,7 @@ To run this app locally, you'll need the following installed:
 
 1. **Clone the repository** from GitHub:
     ```bash
-    git clone https://github.com/username/flask-todo-app.git
+    git clone https://github.com/nalmadi/Flask-todo-db-auth.git
     cd flask-todo-app
     ```
 
