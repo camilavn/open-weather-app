@@ -53,7 +53,7 @@ To run this app locally, you'll need the following installed:
 
 
 6. Add a feature to remove a task from the todo list, this involves the following steps:
-       - Modify todo.html to add a link to remove (similar to check)
-       - Modify views.html to add a view for removing a task (similar to check)
+    - Modify todo.html to add a link to remove (similar to check)
+    - Modify views.html to add a view for removing a task (similar to check)
 
-7. When finished, modify the database to add a priority column that store take a string like low, medium, or high.  Add the necessary code to make the priority of each task appear in your todo list.
+7. When finished, modify the database to add a priority column that stores a string like low, medium, or high.  Add the necessary code to allow users to set priority and see the priority of each task the todo list.
