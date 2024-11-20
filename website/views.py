@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for
 from flask import request
-from models import db, User, Task
+from website import db
+from .models import User, Task
 from flask_login import login_required, current_user
 
 # Create a blueprint
