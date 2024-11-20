@@ -20,8 +20,6 @@ jobs:
         pip install pylint
         pip install pytest
         pip install -r requirements.txt
-    - name: Test env vars for python
-      run: SQLALCHEMY_DATABASE_URI="sqlite:///test.db" python -c 'import os;print(os.environ['SQLALCHEMY_DATABASE_URI'])'
     # - name: Analysing the code with pylint
     #   run: |
     #     pylint $(git ls-files '*.py')
