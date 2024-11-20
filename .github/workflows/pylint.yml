@@ -25,4 +25,4 @@ jobs:
     #     pylint $(git ls-files '*.py')
     - name: Testing the code with pytest
       run: |
-        python -m pytest -v
+        python -m pytest -v 
