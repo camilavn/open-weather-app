@@ -14,9 +14,15 @@ db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("postgres", "postgresql", 1)
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    # check if testing app, to configure the app for testing
+    if os.environ.get('CONFIG_TYPE') == 'config.TestingConfig':
+        app.config['SECRET_KEY'] = 'secret'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+    else:
+        app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("postgres", "postgresql", 1)
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
 
     login_manager = LoginManager(app)
