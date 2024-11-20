@@ -19,6 +19,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
         pip install pytest
+        pip install Flask==3.0.3
     # - name: Analysing the code with pylint
     #   run: |
     #     pylint $(git ls-files '*.py')
