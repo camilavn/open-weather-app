@@ -1,6 +1,5 @@
 import pytest
 from website import create_app, db
-from website.models import User
 import os
 
 @pytest.fixture(scope='module')
