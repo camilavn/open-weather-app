@@ -42,6 +42,7 @@ def create_app():
 
     #if __name__ == '__main__':
     with app.app_context():
+        print('Creating tables')
         db.create_all()  # Create tables (if not created)
         #app.run(debug=True)
 

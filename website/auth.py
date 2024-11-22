@@ -25,21 +25,22 @@ def login():
 @auth_blueprint.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
+        print('Signup')
         username = request.form.get('username')
         password = request.form.get('password')
 
         # Check if the user already exists
         existing_user = User.query.filter_by(username=username).first()
-        if existing_user:
-            return redirect(url_for('auth.login'))
+        
+        if not existing_user:
+            print('Creating new user')
+            # Create a new user
+            new_user = User(username=username)
+            new_user.set_password(password)
 
-        # Create a new user
-        new_user = User(username=username)
-        new_user.set_password(password)
-
-        # Add and commit the user to the database
-        db.session.add(new_user)
-        db.session.commit()
+            # Add and commit the user to the database
+            db.session.add(new_user)
+            db.session.commit()
 
         return redirect(url_for('auth.login'))
 

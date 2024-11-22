@@ -12,7 +12,7 @@ main_blueprint = Blueprint('main', __name__)
 @login_required
 def todo():
     if request.method == 'POST':
-        task = request.form['task-text']
+        task = request.form['task']
         new_task = Task(text=task, status='not-completed', user=current_user)
         db.session.add(new_task)
         db.session.commit()
@@ -26,7 +26,7 @@ def todo():
 def check(task_id):
     task = Task.query.get(task_id)
     
-    if task.user != current_user:
+    if not task or task.user != current_user:
         return redirect(url_for('main.todo'))
     
     task.status = 'completed'
