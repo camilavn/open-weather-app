@@ -1,172 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Weather App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8"/>
+    <title>Weather App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS (CDN) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS (CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Argon Dashboard CSS (Local) -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}">
+    <!-- Argon Dashboard CSS (Local) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}">
 
-  <!-- Nucleo Icons for Argon  -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/nucleo-icons.css') }}">
+    <!-- Nucleo Icons for Argon  -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/nucleo-icons.css') }}">
 
-  <!-- Bootstrap Icons  -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <!-- Bootstrap Icons  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
-  <!-- Inline Custom Styles -->
-  <style>
-    /* A subtle overlay for card backgrounds */
-    .card-overlay {
-      background-color: rgba(255, 255, 255, 0.05);
-      border-radius: 1rem;
-    }
-    /* Force all headings, paragraph text, labels, etc. to white */
-    h1, h2, h3, h4, h5, h6, p, label, .form-label, small, .text-primary, a {
-      color: #fff !important;
-    }
-  </style>
+    <!-- Inline Custom Styles -->
+    <style>
+        /* A subtle overlay for card backgrounds */
+        .card-overlay {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+        }
+
+        /* Force all headings, paragraph text, labels, etc. to white */
+        h1, h2, h3, h4, h5, h6, p, label, .form-label, small, .text-primary, a {
+            color: #fff !important;
+        }
+    </style>
 </head>
 
 <body class="g-sidenav-show bg-gradient-dark text-white">
-  <div class="container py-4">
+<div class="container py-4">
 
     <!-- Dropdown on the top-left corner -->
     <div class="dropdown float-start m-3">
-      <button
-        class="btn btn-secondary dropdown-toggle"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        Weather
-      </button>
-      <div class="dropdown-menu p-3" style="min-width: 300px;">
-        <form method="POST" class="row g-3">
-          <div class="col-12">
-            <label for="city" class="form-label">City</label>
-            <input type="text" class="form-control" id="city" name="city" required>
-          </div>
-          <div class="col-12">
-            <label for="state" class="form-label">State (optional)</label>
-            <input type="text" class="form-control" id="state" name="state">
-          </div>
-          <div class="col-12">
-            <label for="country" class="form-label">Country</label>
-            <input type="text" class="form-control" id="country" name="country" required>
-          </div>
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary w-100">Get Weather</button>
-          </div>
-        </form>
-        <!-- Override label color for dropdown inputs -->
-        <style>
-          .dropdown-menu .form-label,
-          .dropdown-menu label {
-            color: #000 !important;
-          }
-        </style>
-      </div>
+        <button
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+        >
+            Weather
+        </button>
+        <div class="dropdown-menu p-3" style="min-width: 300px;">
+            <form method="POST" class="row g-3">
+                <div class="col-12">
+                    <label for="city" class="form-label">City</label>
+                    <input type="text" class="form-control" id="city" name="city" required>
+                </div>
+                <div class="col-12">
+                    <label for="state" class="form-label">State (optional)</label>
+                    <input type="text" class="form-control" id="state" name="state">
+                </div>
+                <div class="col-12">
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" class="form-control" id="country" name="country" required>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary w-100">Get Weather</button>
+                </div>
+            </form>
+            <!-- Override label color for dropdown inputs -->
+            <style>
+                .dropdown-menu .form-label,
+                .dropdown-menu label {
+                    color: #000 !important;
+                }
+            </style>
+        </div>
     </div>
 
     <!-- Error Message -->
     {% if error_message %}
-      <div class="alert alert-danger">
-        {{ error_message }}
-      </div>
+        <div class="alert alert-danger">
+            {{ error_message }}
+        </div>
     {% endif %}
 
     <!-- Current Weather Card -->
     {% if weather_data %}
-    <div class="card mb-4 bg-dark text-white">
-      <div class="card-body">
-        <!-- Header -->
-        <h5 class="text-uppercase fw-bold mb-2">Current Weather</h5>
+        <div class="card mb-4 bg-dark text-white">
+            <div class="card-body">
+                <!-- Header -->
+                <h5 class="text-uppercase fw-bold mb-2">Current Weather</h5>
 
-        <!-- Row for Icon, Temperature, and Timestamp -->
-        <div class="row align-items-center">
-          <!-- Icon Column -->
-          <div class="col-auto">
-            <img
-              src="http://openweathermap.org/img/wn/{{ weather_data.weather[0].icon }}@2x.png"
-              alt="Weather Icon"
-              width="80"
-              height="80">
-          </div>
-          <!-- Temperature Column -->
-          <div class="col-auto">
-            <h2 class="display-4 mb-0">{{ weather_data.main.temp }}°C</h2>
-          </div>
-          <!-- Timestamp Column -->
-          <div class="col-auto">
-            <h6 class="mb-0">{{ weather_data.formatted_time }}</h6>
-          </div>
+                <!-- Row for Icon, Temperature, and Timestamp -->
+                <div class="row align-items-center">
+                    <!-- Icon Column -->
+                    <div class="col-auto">
+                        <img
+                                src="http://openweathermap.org/img/wn/{{ weather_data.weather[0].icon }}@2x.png"
+                                alt="Weather Icon"
+                                width="80"
+                                height="80">
+                    </div>
+                    <!-- Temperature Column -->
+                    <div class="col-auto">
+                        <h2 class="display-4 mb-0">{{ weather_data.main.temp }}°C</h2>
+                    </div>
+                    <!-- Timestamp Column -->
+                    <div class="col-auto">
+                        <h6 class="mb-0">{{ weather_data.formatted_time }}</h6>
+                    </div>
+                </div>
+
+                <!-- Weather Description and Additional Info -->
+                <h4 class="mb-1">{{ weather_data.weather[0].description|capitalize }}</h4>
+                <p class="mb-2">
+                    The skies will be {{ weather_data.weather[0].description }}.
+                    The low will be {{ weather_data.main.temp_min }}°C.
+                </p>
+
+                <!-- Bottom row for stats boxes -->
+                <div class="row text-center mt-3">
+                    <div class="col border-end">
+                        <small class="text-uppercase">Wind</small>
+                        <div>{{ weather_data.wind.speed }} km/h</div>
+                    </div>
+                    <div class="col border-end">
+                        <small class="text-uppercase">Humidity</small>
+                        <div>{{ weather_data.main.humidity }}%</div>
+                    </div>
+                    <div class="col border-end">
+                        <small class="text-uppercase">Visibility</small>
+                        <div>{{ weather_data.visibility // 1000 }} km</div>
+                    </div>
+                    <div class="col border-end">
+                        <small class="text-uppercase">Pressure</small>
+                        <div>{{ weather_data.main.pressure }} mb</div>
+                    </div>
+                    <div class="col">
+                        <small class="text-uppercase">Dew Point</small>
+                        <div>{{ weather_data.main.temp_min }}°C</div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Weather Description and Additional Info -->
-        <h4 class="mb-1">{{ weather_data.weather[0].description|capitalize }}</h4>
-        <p class="mb-2">
-          The skies will be {{ weather_data.weather[0].description }}.
-          The low will be {{ weather_data.main.temp_min }}°C.
-        </p>
-
-        <!-- Bottom row for stats boxes -->
-        <div class="row text-center mt-3">
-          <div class="col border-end">
-            <small class="text-uppercase">Wind</small>
-            <div>{{ weather_data.wind.speed }} km/h</div>
-          </div>
-          <div class="col border-end">
-            <small class="text-uppercase">Humidity</small>
-            <div>{{ weather_data.main.humidity }}%</div>
-          </div>
-          <div class="col border-end">
-            <small class="text-uppercase">Visibility</small>
-            <div>{{ weather_data.visibility // 1000 }} km</div>
-          </div>
-          <div class="col border-end">
-            <small class="text-uppercase">Pressure</small>
-            <div>{{ weather_data.main.pressure }} mb</div>
-          </div>
-          <div class="col">
-            <small class="text-uppercase">Dew Point</small>
-            <div>{{ weather_data.main.temp_min }}°C</div>
-          </div>
-        </div>
-      </div>
-    </div>
     {% endif %}
 
     <!-- 5-Day Forecast Card -->
     {% if forecast_data %}
-    <div class="card mb-4 bg-transparent border-0">
-      <div class="card-body p-4 card-overlay">
-        <div class="row text-center">
-          <h5 class="text-uppercase fw-bold mb-4">5-Day Forecast</h5>
-          {% for forecast in forecast_data.list %}
-            {% if forecast.dt_txt.endswith("12:00:00") %}
-              <div class="col">
-                <h6>{{ forecast.dt_txt.split(' ')[0] }}</h6>
-                <img
-                  src="http://openweathermap.org/img/wn/{{ forecast.weather[0].icon }}@2x.png"
-                  alt="Icon"
-                  width="50"
-                  height="50">
-                <p class="mb-0">{{ forecast.main.temp_min }}° / {{ forecast.main.temp_max }}°</p>
-                <small>{{ forecast.weather[0].description|capitalize }}</small>
-              </div>
-            {% endif %}
-          {% endfor %}
+        <div class="card mb-4 bg-transparent border-0">
+            <div class="card-body p-4 card-overlay">
+                <div class="row text-center">
+                    <h5 class="text-uppercase fw-bold mb-4">5-Day Forecast</h5>
+                    {% for forecast in forecast_data.list %}
+                        {% if forecast.dt_txt.endswith("12:00:00") %}
+                            <div class="col">
+                                <h6>{{ forecast.dt_txt.split(' ')[0] }}</h6>
+                                <img
+                                        src="http://openweathermap.org/img/wn/{{ forecast.weather[0].icon }}@2x.png"
+                                        alt="Icon"
+                                        width="50"
+                                        height="50">
+                                <p class="mb-0">{{ forecast.main.temp_min }}° / {{ forecast.main.temp_max }}°</p>
+                                <small>{{ forecast.weather[0].description|capitalize }}</small>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
     {% endif %}
-  </div>
+</div>
 
-  <!-- Bootstrap JS Bundle (includes Popper) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap JS Bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

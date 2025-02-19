@@ -3,6 +3,7 @@ import pytest
 from datetime import datetime
 from website import create_app
 
+
 def fake_requests_get(url, *args, **kwargs):
     if "weather?" in url:
         dummy_weather = {
@@ -22,11 +23,14 @@ def fake_requests_get(url, *args, **kwargs):
         }
         # Format the time as "1:28 pm"
         dummy_weather['formatted_time'] = datetime.utcfromtimestamp(dummy_weather['dt']).strftime('%-I:%M %p').lower()
+
         class DummyResponse:
             status_code = 200
             text = json.dumps(dummy_weather)
+
             def json(self):
                 return dummy_weather
+
         return DummyResponse()
     elif "forecast?" in url:
         dummy_forecast = {
@@ -43,19 +47,25 @@ def fake_requests_get(url, *args, **kwargs):
                 }
             ]
         }
+
         class DummyResponse:
             status_code = 200
             text = json.dumps(dummy_forecast)
+
             def json(self):
                 return dummy_forecast
+
         return DummyResponse()
     else:
         class DummyResponse:
             status_code = 404
             text = ""
+
             def json(self):
                 return {}
+
         return DummyResponse()
+
 
 @pytest.fixture
 def test_client():
@@ -63,6 +73,7 @@ def test_client():
     app.testing = True
     with app.test_client() as client:
         yield client
+
 
 def test_index_get(test_client):
     """
@@ -73,6 +84,7 @@ def test_index_get(test_client):
     response = test_client.get('/', follow_redirects=True)
     assert response.status_code == 200
     assert b"Weather" in response.data
+
 
 def test_index_post_current_weather(test_client, monkeypatch):
     """
@@ -88,6 +100,7 @@ def test_index_post_current_weather(test_client, monkeypatch):
     assert b"Current Weather" in response.data
     assert b"4.93" in response.data
     assert b"clear sky" in response.data
+
 
 def test_index_post_forecast(test_client, monkeypatch):
     """
