@@ -19,10 +19,18 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
         pip install pytest
+        pip install pytest-cov  # Install pytest-cov for coverage reporting
         pip install -r requirements.txt
-    # - name: Analysing the code with pylint
-    #   run: |
-    #     pylint $(git ls-files '*.py')
-    - name: Testing the code with pytest
+    - name: Analysing the code with pylint
       run: |
-        python -m pytest -v 
+        pylint $(git ls-files '*.py')
+    - name: Testing the code with pytest and generating coverage report
+      run: |
+        python -m pytest --cov=./ --cov-report=xml -v
+    - name: Upload coverage report
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: true
